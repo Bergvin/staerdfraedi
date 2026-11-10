@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flatarmyndir – prófundirbúningur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column like a ruled exercise book; sticky section bar; ink-blue with a red "teacher pen" accent */
+:root {
+  --paper: #f6f8fb;
+  --sheet: #ffffff;
+  --ink: #18233a;
+  --muted: #5a6680;
+  --rule: #d9e0ec;
+  --blue: #1f4fa8;
+  --blue-soft: #e6edfa;
+  --red: #c2362f;
+  --red-soft: #fbeaea;
+  --ok: #1d7a4c;
+  --ok-soft: #e3f4ea;
+  --display: "Literata", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1522; --sheet: #161e2f; --ink: #e5eaf4; --muted: #9aa6bf; --rule: #2a3550;
+    --blue: #8fb2ff; --blue-soft: #1d2a48; --red: #ff8a80; --red-soft: #3a2024; --ok: #6fd3a0; --ok-soft: #173327;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1522; --sheet: #161e2f; --ink: #e5eaf4; --muted: #9aa6bf; --rule: #2a3550;
+  --blue: #8fb2ff; --blue-soft: #1d2a48; --red: #ff8a80; --red-soft: #3a2024; --ok: #6fd3a0; --ok-soft: #173327;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--sheet); }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { padding-block: 40px 24px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 6vw, 44px); line-height: 1.1; margin: 6px 0 12px; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 26px; margin: 0 0 6px; text-wrap: balance; }
+h3 { font-family: var(--display); font-weight: 600; font-size: 19px; margin: 0; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 60ch; }
+.scope { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chip { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-weight: 500; }
+.chip.red { background: var(--red-soft); color: var(--red); }
+
+nav.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--sheet); border-bottom: 1px solid var(--rule); }
+nav.bar .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; scrollbar-width: none; }
+nav.bar a { flex: none; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 14px; padding: 6px 12px; border-radius: 8px; }
+nav.bar a:hover, nav.bar a:focus-visible { color: var(--ink); background: var(--blue-soft); outline: none; }
+
+section { padding-block: 40px 8px; scroll-margin-top: 60px; }
+.sec-head { display: grid; gap: 6px; margin-bottom: 20px; }
+.sec-head p { color: var(--muted); max-width: 62ch; }
+
+/* Progress */
+.progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.meter { flex: 1; height: 8px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+
+/* Sessions */
+.sessions { display: grid; gap: 14px; }
+.session { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 14px; }
+.session.done { border-color: var(--ok); }
+.s-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.s-num { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--blue); min-width: 58px; }
+.s-meta { margin-left: auto; font-size: 13px; color: var(--muted); }
+.tasks { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
+.tasks label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; padding: 5px 4px; border-radius: 6px; }
+.tasks label:hover { background: var(--blue-soft); }
+.tasks input { margin-top: 4px; width: 17px; height: 17px; accent-color: var(--ok); flex: none; }
+.tasks input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--ok); }
+.tip { margin-top: 18px; padding: 14px 16px; border-left: 3px solid var(--red); background: var(--red-soft); border-radius: 0 8px 8px 0; font-size: 15px; }
+.tip strong { color: var(--red); }
+
+/* Rules reference */
+.kafli { margin-top: 22px; }
+.kafli > h3 { margin-bottom: 10px; color: var(--blue); }
+.rule { border: 1.5px solid var(--ink); background: var(--sheet); padding: 12px 14px; margin-bottom: 10px; }
+.rule .rt { font-weight: 600; }
+.rule .rb { margin-top: 4px; }
+.rule .rf { margin-top: 6px; font-family: var(--display); font-style: italic; font-size: 17px; color: var(--blue); }
+.page { float: right; font-size: 12px; color: var(--muted); margin-left: 8px; }
+.m { font-family: var(--display); font-style: italic; }
+
+/* Proofs */
+.proof { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; margin-bottom: 16px; display: grid; grid-template-columns: minmax(0,1fr) 220px; gap: 18px; align-items: start; }
+.proof .txt { min-width: 0; }
+.proof .stmt { margin: 6px 0 10px; font-style: italic; font-family: var(--display); }
+.proof ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.proof .eq { display: block; text-align: center; font-family: var(--display); font-style: italic; font-size: 17px; margin: 4px 0; color: var(--blue); }
+.proof svg { width: 100%; height: auto; max-width: 100%; }
+.proof .note { margin-top: 12px; font-size: 14px; color: var(--red); }
+.qed { float: right; color: var(--ink); font-style: normal; }
+.hideable.hidden ol { filter: blur(6px); user-select: none; }
+.btn { font: inherit; font-size: 14px; font-weight: 500; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); cursor: pointer; }
+.btn:hover { background: var(--blue-soft); }
+.btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.btn.primary { background: var(--blue); color: var(--sheet); border-color: var(--blue); }
+.btn.good { background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
+.btn.bad { background: var(--red-soft); color: var(--red); border-color: var(--red); }
+.proof .btn { margin-top: 12px; }
+svg .ln { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+svg .hl { stroke: var(--blue); stroke-width: 1.6; fill: none; }
+svg .dash { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+svg text { fill: var(--ink); font-family: var(--display); font-style: italic; font-size: 15px; }
+svg text.b { fill: var(--blue); }
+
+/* Flashcards */
+.fc-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+.fc-controls select { font: inherit; font-size: 14px; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); }
+.fc-count { margin-left: auto; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.card { width: 100%; min-height: 220px; border: 1.5px solid var(--ink); background: var(--sheet); border-radius: 4px; padding: 22px; cursor: pointer; display: grid; align-content: center; gap: 10px; text-align: left; font: inherit; color: var(--ink); background-image: repeating-linear-gradient(var(--sheet) 0 31px, var(--rule) 31px 32px); }
+.card:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.card .side { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+.card .q { font-family: var(--display); font-size: 24px; font-weight: 600; text-wrap: balance; }
+.card .a { font-size: 17px; }
+.card .a .rf { display: block; margin-top: 8px; font-family: var(--display); font-style: italic; color: var(--blue); font-size: 19px; }
+.fc-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.fc-actions .btn { flex: 1; min-width: 120px; }
+
+/* Practice */
+.probs { display: grid; gap: 10px; counter-reset: p; }
+.prob { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; }
+.prob summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: auto 1fr; gap: 10px; }
+.prob summary::-webkit-details-marker { display: none; }
+.prob summary::before { counter-increment: p; content: counter(p) "."; font-family: var(--display); font-weight: 700; color: var(--blue); }
+.prob .hint { grid-column: 2; font-size: 13px; color: var(--muted); }
+.prob .ans { margin: 10px 0 0 26px; padding-top: 10px; border-top: 1px dashed var(--rule); }
+.prob .ans b { color: var(--ok); }
+.tag { font-size: 12px; color: var(--muted); }
+
+/* Exam day */
+.check { columns: 2 260px; gap: 24px; padding-left: 20px; margin: 0; }
+.check li { margin-bottom: 8px; break-inside: avoid; }
+footer { padding-block: 40px 60px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 620px) {
+  .proof { grid-template-columns: 1fr; }
+  .proof svg { max-width: 260px; justify-self: center; }
+  .s-meta { margin-left: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Stærðfræði · 1. bekkur MR</div>
+    <h1>Flatarmyndir – prófundirbúningur</h1>
+    <p class="lede">Námsplan í sjö lotum, allar skilgreiningar og reglur sem þarf að kunna, sannanirnar skref fyrir skref, spjöld til að þjálfa sig og æfingadæmi með svörum. Hakaðu við jafnóðum, framvindan vistast í þessum vafra.</p>
+    <div class="scope">
+      <span class="chip">Kafli 1 · bls. 1–7</span>
+      <span class="chip">Kafli 2 · bls. 7–13</span>
+      <span class="chip">Kafli 3 · bls. 13–16</span>
+      <span class="chip">Kafli 5 · bls. 23–27</span>
+      <span class="chip red">+ Sönnun á reglu Pýþagórasar</span>
+    </div>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Kaflar síðunnar">
+  <div class="wrap">
+    <a href="#plan">Planið</a>
+    <a href="#reglur">Reglur</a>
+    <a href="#sannanir">Sannanir</a>
+    <a href="#spjold">Spjöld</a>
+    <a href="#aefing">Æfingadæmi</a>
+    <a href="#profdagur">Prófdagur</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="plan">
+  <div class="sec-head">
+    <h2>Námsplanið</h2>
+    <p>Sjö lotur, hver um 45–60 mínútur. Best er að taka eina lotu á dag. Ef það eru færri dagar í prófið má sameina lotur 1+2 og 3+4. Lota 7 á að vera síðasti eða næstsíðasti dagurinn.</p>
+  </div>
+  <div class="progress"><span id="progText">0 af 0 atriðum</span><div class="meter"><i id="progBar"></i></div></div>
+  <div class="sessions" id="sessions"></div>
+  <div class="tip"><strong>Mikilvægast:</strong> Í prófi þarf oft að skrifa skilgreiningu eða sönnun orðrétt. Ekki bara lesa, heldur loka heftinu og <em>skrifa</em> á autt blað. Það sem ekki tekst fer aftur í bunkann.</div>
+</section>
+
+<section id="reglur">
+  <div class="sec-head">
+    <h2>Allar skilgreiningar og reglur</h2>
+    <p>Allt innrammað efni í köflum 1, 2, 3 og 5, í sömu röð og í heftinu. Skáletruð hugtök þarf líka að kunna.</p>
+  </div>
+  <div id="rulesList"></div>
+</section>
+
+<section id="sannanir">
+  <div class="sec-head">
+    <h2>Sannanirnar</h2>
+    <p>Fjórar sannanir sem hún þarf að geta skrifað sjálf. Smelltu á „Fela skrefin“, reyndu að skrifa sönnunina á blað og berðu svo saman.</p>
+  </div>
+
+  <article class="proof hideable" id="p-topphorn">
+    <div class="txt">
+      <h3>Topphorn eru jafnstór</h3>
+      <p class="stmt">Sanna: x = z</p>
+      <ol>
+        <li>x og y eru grannhorn og því frændhorn: <span class="eq">x + y = 180°</span></li>
+        <li>y og z eru líka grannhorn og því frændhorn: <span class="eq">y + z = 180°</span></li>
+        <li>Báðar summurnar eru 180°, svo <span class="eq">x = 180° − y = z <span class="qed">∎</span></span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+    <svg viewBox="0 0 220 160" role="img" aria-label="Tvær línur sem skerast, horn x, y og z">
+      <line class="ln" x1="20" y1="30" x2="200" y2="130"/>
+      <line class="ln" x1="20" y1="130" x2="200" y2="30"/>
+      <text x="62" y="86">x</text>
+      <text x="104" y="58">y</text>
+      <text x="146" y="86">z</text>
+    </svg>
+  </article>
+
+  <article class="proof hideable" id="p-regla1">
+    <div class="txt">
+      <h3>Regla 1: Hornasumma þríhyrnings</h3>
+      <p class="stmt">Sanna: A + B + C = 180°</p>
+      <ol>
+        <li>Látum ΔABC vera gefinn. Drögum línu <span class="m">l</span> gegnum B samsíða AC.</li>
+        <li>Af frumreglu um einslæg horn leiðir <span class="eq">x = A og y = C &nbsp;(*)</span></li>
+        <li>Línan <span class="m">l</span> myndar 180° horn með oddpunkt B: <span class="eq">x + B + y = 180°</span></li>
+        <li>Setjum (*) inn: <span class="eq">A + B + C = 180° <span class="qed">∎</span></span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+    <svg viewBox="0 0 220 170" role="img" aria-label="Þríhyrningur ABC með línu l gegnum B samsíða AC">
+      <line class="hl" x1="10" y1="40" x2="210" y2="40"/>
+      <polygon class="ln" points="30,145 110,40 190,145"/>
+      <text x="200" y="32" class="b">l</text>
+      <text x="104" y="30">B</text>
+      <text x="14" y="160">A</text>
+      <text x="194" y="160">C</text>
+      <text x="76" y="56" class="b">x</text>
+      <text x="134" y="56" class="b">y</text>
+    </svg>
+  </article>
+
+  <article class="proof hideable" id="p-regla2">
+    <div class="txt">
+      <h3>Regla 2: Grannhorn við þríhyrning</h3>
+      <p class="stmt">Sanna: x = B + C, þar sem x er grannhorn hornsins A</p>
+      <ol>
+        <li>A og x eru frændhorn: <span class="eq">A + x = 180°, þ.e. x = 180° − A &nbsp;(*)</span></li>
+        <li>Skv. reglunni um hornasummu þríhyrnings: <span class="eq">A + B + C = 180°, þ.e. B + C = 180° − A &nbsp;(**)</span></li>
+        <li>Af (*) og (**) leiðir að <span class="eq">x = B + C <span class="qed">∎</span></span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+    <svg viewBox="0 0 220 160" role="img" aria-label="Þríhyrningur ABC þar sem hliðin BA er framlengd út fyrir A og grannhorn x myndast">
+      <line class="dash" x1="8" y1="130" x2="60" y2="130"/>
+      <polygon class="ln" points="60,130 200,130 105,30"/>
+      <text x="54" y="150">A</text>
+      <text x="196" y="150">B</text>
+      <text x="100" y="22">C</text>
+      <text x="44" y="122" class="b">x</text>
+    </svg>
+  </article>
+
+  <article class="proof hideable" id="p-pyth">
+    <div class="txt">
+      <h3>Regla 3: Pýþagóras</h3>
+      <p class="stmt">Sanna: Ef C = 90° þá er a² + b² = c²</p>
+      <ol>
+        <li>Drögum hæðina frá C á langhliðina c. Fótpunkturinn heitir D.</li>
+        <li>ΔADC og ΔACB hafa sameiginlegt horn A og bæði rétt horn (við D og C). Þriðju hornin eru því líka jöfn (Regla 1), svo <span class="eq">ΔADC ~ ΔACB</span></li>
+        <li>Frumregla 2 gefur jöfn hlutföll: <span class="eq">|AD| / b = b / c &nbsp;⇒&nbsp; b² = c · |AD|</span></li>
+        <li>Eins fæst ΔBDC ~ ΔBCA (sameiginlegt horn B og rétt horn): <span class="eq">|DB| / a = a / c &nbsp;⇒&nbsp; a² = c · |DB|</span></li>
+        <li>Leggjum saman: <span class="eq">a² + b² = c · (|AD| + |DB|) = c · c = c² <span class="qed">∎</span></span></li>
+      </ol>
+      <p class="note">Athugið: Í heftinu (bls. 15) stendur að sönnunin „bíði betri tíma“, svo hún er ekki þar. Þetta er algengasta sönnunin og byggir á kafla 3. Berið hana saman við sönnunina sem kennarinn sýndi í tíma og lærið þá útgáfu ef hún er önnur.</p>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+    <svg viewBox="0 0 220 150" role="img" aria-label="Rétthyrndur þríhyrningur ABC með rétt horn við C og hæð CD á langhliðina AB">
+      <polygon class="ln" points="20,125 200,125 65,47"/>
+      <line class="hl" x1="65" y1="47" x2="65" y2="125"/>
+      <polyline class="ln" points="65,115 75,115 75,125" stroke-width="1"/>
+      <polyline class="ln" points="73,52 68,61 59,56" stroke-width="1"/>
+      <text x="6" y="140">A</text>
+      <text x="198" y="140">B</text>
+      <text x="58" y="38">C</text>
+      <text x="60" y="142" class="b">D</text>
+      <text x="28" y="82">b</text>
+      <text x="136" y="78">a</text>
+      <text x="128" y="142">c</text>
+    </svg>
+  </article>
+</section>
+
+<section id="spjold">
+  <div class="sec-head">
+    <h2>Spjöld</h2>
+    <p>Lestu spurninguna, segðu svarið upphátt eða skrifaðu það, og snúðu svo spjaldinu. Spjöld sem fara í „Æfa meira“ koma aftur.</p>
+  </div>
+  <div class="fc-controls">
+    <label for="fcFilter" class="tag">Kafli</label>
+    <select id="fcFilter">
+      <option value="all">Allir kaflar</option>
+      <option value="1">Kafli 1</option>
+      <option value="2">Kafli 2</option>
+      <option value="3">Kafli 3</option>
+      <option value="5">Kafli 5</option>
+    </select>
+    <button class="btn" type="button" id="fcShuffle">Stokka</button>
+    <button class="btn" type="button" id="fcReset">Byrja upp á nýtt</button>
+    <span class="fc-count" id="fcCount"></span>
+  </div>
+  <button class="card" type="button" id="fcCard" aria-live="polite"></button>
+  <div class="fc-actions">
+    <button class="btn bad" type="button" id="fcAgain">Æfa meira</button>
+    <button class="btn good" type="button" id="fcKnow">Kann þetta</button>
+  </div>
+</section>
+
+<section id="aefing">
+  <div class="sec-head">
+    <h2>Æfingadæmi</h2>
+    <p>Aukadæmi til viðbótar við æfingarnar í heftinu. Reiknaðu fyrst á blað og smelltu svo á dæmið til að sjá svarið.</p>
+  </div>
+  <div class="probs" id="probs"></div>
+</section>
+
+<section id="profdagur">
+  <div class="sec-head">
+    <h2>Kvöldið fyrir og prófdagurinn</h2>
+  </div>
+  <ol class="check">
+    <li>Kvöldið áður: renna einu sinni yfir spjöldin, ekkert nýtt efni.</li>
+    <li>Skrifa sannanirnar fjórar einu sinni á blað og fara svo að sofa.</li>
+    <li>Taka með blýant, strokleður, reglustiku, gráðuboga og vasareikni ef leyfður.</li>
+    <li>Í prófinu: teikna alltaf mynd og merkja hornin.</li>
+    <li>Nefna regluna sem er notuð í hverju skrefi („skv. reglu 1…“).</li>
+    <li>Byrja á dæmunum sem eru auðveldust og koma svo aftur að hinum.</li>
+    <li>Í lokin: athuga hvort hornasumman í þríhyrningum sé 180°.</li>
+  </ol>
+</section>
+
+</main>
+<footer><div class="wrap">Byggt á heftinu „Flatarmyndir“ (kaflar 1, 2, 3 og 5). Blaðsíðutöl vísa í heftið.</div></footer>
+
+<script>
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+/* ---------- Plan ---------- */
+const sessions = [
+  { t: "Grunnhugtök og horn", k: "Kafli 1 · bls. 1–6", tasks: [
+    "Lesa bls. 1–6 vandlega: punktur, lína, strik, hálflína, miðpunktur",
+    "Skilgreiningar 1–4: hringur, horn, stærð horns, rétt/hvasst/sljótt, frænd-/grann-/topphorn",
+    "Teikna sjálf mynd af hverju hugtaki",
+    "Spjöldin fyrir kafla 1"
+  ]},
+  { t: "Kafli 1 kláraður", k: "Æfing 1 · bls. 6–7", tasks: [
+    "Reikna Æfingu 1 og bera saman við svörin aftast (bls. 32)",
+    "Skrifa sönnunina á að topphorn séu jafnstór án þess að kíkja",
+    "Spjöldin fyrir kafla 1 aftur, bara þau sem fóru í „Æfa meira“"
+  ]},
+  { t: "Samsíða línur og hornasumma", k: "Kafli 2 · bls. 7–11", tasks: [
+    "Lesa bls. 7–11: einslæg horn, ⇔ og ⇒",
+    "Læra Frumreglu 1 um einslæg horn orðrétt",
+    "Fara í gegnum sannanir á Reglu 1 og Reglu 2",
+    "Hornasumma ferhyrnings og n-hyrnings",
+    "Skilgreiningar 5 og 6: hæð, miðlína, helmingalína, miðþverill (teikna þær allar í einn þríhyrning)"
+  ]},
+  { t: "Kafli 2 þjálfaður", k: "Æfing 2 · bls. 12", tasks: [
+    "Reikna Æfingu 2",
+    "Skrifa sannanir á Reglu 1 og Reglu 2 á autt blað",
+    "Spjöldin fyrir kafla 2",
+    "Æfingadæmi 1–5 hér á síðunni"
+  ]},
+  { t: "Einshyrndir þríhyrningar og Pýþagóras", k: "Kafli 3 · bls. 13–16", tasks: [
+    "Lesa bls. 13–16: Skilgreining 7 og Frumregla 2",
+    "Muna að röðin skiptir máli í ΔABC ~ ΔRQP",
+    "Regla 3 (Pýþagóras og andhverfa) og dæmin í kaflanum",
+    "Læra sönnunina á reglu Pýþagórasar, skref fyrir skref",
+    "Reikna Æfingu 3"
+  ]},
+  { t: "Horn og hringbogar", k: "Kafli 5 · bls. 23–26", tasks: [
+    "Lesa bls. 23–26: miðhorn, ferilhorn, Regla 10",
+    "Sniðill, snertill, snertipunktur, Skilgreining 10 (umritaður/innritaður hringur)",
+    "Reikna Æfingu 5",
+    "Spjöldin fyrir kafla 3 og 5",
+    "Æfingadæmi 6–12 hér á síðunni"
+  ]},
+  { t: "Stóra upprifjunin", k: "Allt efnið", tasks: [
+    "Öll spjöldin þar til allt er í „Kann þetta“",
+    "Skrifa allar fjórar sannanirnar á autt blað",
+    "Endurreikna dæmi úr æfingunum sem gengu illa",
+    "Fara yfir gátlistann fyrir prófdaginn"
+  ]}
+];
+const doneKey = "fm-plan-done";
+let done = store.get(doneKey, {});
+const sEl = document.getElementById("sessions");
+sessions.forEach((s, i) => {
+  const art = document.createElement("article");
+  art.className = "session";
+  art.innerHTML = `<div class="s-top"><span class="s-num">Lota ${i + 1}</span><h3>${s.t}</h3><span class="s-meta">${s.k}</span></div>
+    <ul class="tasks">${s.tasks.map((t, j) => `<li><label><input type="checkbox" id="t${i}-${j}" data-id="${i}-${j}"><span>${t}</span></label></li>`).join("")}</ul>`;
+  sEl.appendChild(art);
+});
+function refreshPlan() {
+  const boxes = [...document.querySelectorAll(".tasks input")];
+  boxes.forEach(b => b.checked = !!done[b.dataset.id]);
+  document.querySelectorAll(".session").forEach(art => {
+    const bs = art.querySelectorAll("input");
+    art.classList.toggle("done", [...bs].every(b => b.checked));
+  });
+  const n = boxes.filter(b => b.checked).length;
+  document.getElementById("progText").textContent = `${n} af ${boxes.length} atriðum`;
+  document.getElementById("progBar").style.width = (100 * n / boxes.length) + "%";
+}
+sEl.addEventListener("change", e => {
+  if (!e.target.dataset.id) return;
+  done[e.target.dataset.id] = e.target.checked;
+  store.set(doneKey, done);
+  refreshPlan();
+});
+refreshPlan();
+
+/* ---------- Rules (shared by reference list and flashcards) ---------- */
+const rules = [
+  { c: 1, p: 1, q: "Frumhugtök flatarfræðinnar", a: "Punktur og lína. Þau eru ekki skilgreind út frá öðrum hugtökum. Punktur hefur enga stærð, lína enga breidd og er óendanleg í báðar áttir." },
+  { c: 1, p: 2, q: "Miðpunktur striks AB", a: "Punktur M á AB þannig að |AM| = |BM|.", f: "|AM| = |AB| / 2" },
+  { c: 1, p: 2, q: "Skilgreining 1: Hringur", a: "Hringur nefnist safn þeirra punkta sem eru í ákveðinni fjarlægð frá tilteknum punkti. Sá punktur kallast miðja hringsins en strik frá miðjunni að hringnum kallast geisli (radíus) hans." },
+  { c: 1, p: 2, q: "Skilgreining 1 frh.: Strengur, miðstrengur, þvermál", a: "Strik með báða endapunkta á hring heitir strengur. Strengur sem gengur gegnum miðjuna nefnist miðstrengur. Lengd miðstrengs kallast þvermál hringsins." },
+  { c: 1, p: 3, q: "Skilgreining 2: Horn og stærð horns", a: "Horn nefnist sú mynd sem tvær hálflínur út frá sama endapunkti mynda. Endapunkturinn kallast oddpunktur og hálflínurnar armar hornsins. Stærð horns er mæld með því að leggja oddpunktinn í miðju hrings og er þá jöfn gráðutali hringbogans milli arma hornsins." },
+  { c: 1, p: 4, q: "Skilgreining 3: Rétt, hvasst og sljótt horn", a: "Horn kallast rétt ef það er 90°, hvasst ef það er minna en 90° og sljótt (gleitt) ef það er milli 90° og 180°." },
+  { c: 1, p: 5, q: "Skilgreining 4: Frændhorn, grannhorn, topphorn", a: "Frændhorn: summa þeirra er 180°. Grannhorn: hafa einn arm sameiginlegan en hinir armarnir eru framhald hvor af öðrum. Topphorn: hægri armar eru framhald hvor af öðrum og vinstri armarnir líka." },
+  { c: 1, p: 5, q: "Hvað gildir um topphorn?", a: "Topphorn eru jafnstór. (Öll grannhorn eru frændhorn.)" },
+  { c: 2, p: 8, q: "Frumregla 1 um einslæg horn", a: "Tvær línur sem skornar eru af þriðju línu eru samsíða þá og því aðeins að einslæg horn séu jafnstór.", f: "u = v ⇔ l ∥ m" },
+  { c: 2, p: 8, q: "Hvað þýða ⇔ og ⇒?", a: "⇔ er lesið „þá og því aðeins að“: fullyrðingarnar eru jafngildar. ⇒ er lesið „þar af leiðir“: hægri hliðin er afleiðing af þeirri vinstri." },
+  { c: 2, p: 9, q: "Regla 1 um hornasummu þríhyrnings", a: "Summa hornanna í þríhyrningi er 180°.", f: "A + B + C = 180°" },
+  { c: 2, p: 10, q: "Hornasumma ferhyrnings og n-hyrnings", a: "Hornasumma ferhyrnings er 360°. Hornasumma n-hyrnings er (n − 2)·180°, því hornalínur út frá einum punkti skipta honum í n − 2 þríhyrninga.", f: "(n − 2) · 180°" },
+  { c: 2, p: 10, q: "Regla 2 um grannhorn við þríhyrning", a: "Grannhorn eins horns í þríhyrningi er jafnt summu hinna tveggja.", f: "x = B + C" },
+  { c: 2, p: 11, q: "Skilgreining 5: Rétthyrndur, sljóhyrndur, hvasshyrndur", a: "Þríhyrningur er rétthyrndur ef hann hefur eitt rétt horn, sljóhyrndur ef hann hefur eitt sljótt horn og hvasshyrndur ef öll horn hans eru hvöss." },
+  { c: 2, p: 11, q: "Skilgreining 6: Hæð (h) og miðlína (m)", a: "Hæð er strik frá hornpunkti hornrétt á mótlæga hlið (eða framhald hennar). Miðlína er strik frá hornpunkti að miðpunkti mótlægrar hliðar." },
+  { c: 2, p: 11, q: "Skilgreining 6: Helmingalína (v) og miðþverill (n)", a: "Helmingalína er strik frá hornpunkti að mótlægri hlið sem skiptir horninu í tvö jafnstór horn. Miðþverill er lína sem er hornrétt á hlið og liggur gegnum miðpunkt hennar." },
+  { c: 3, p: 13, q: "Skilgreining 7: Einshyrndir þríhyrningar", a: "ΔABC og ΔA₁B₁C₁ eru einshyrndir ef tilsvarandi horn þeirra eru jafnstór: ∠A = ∠A₁, ∠B = ∠B₁ og ∠C = ∠C₁. Táknað ΔABC ~ ΔA₁B₁C₁. Röðin skiptir máli.", f: "ΔABC ~ ΔA₁B₁C₁" },
+  { c: 3, p: 14, q: "Frumregla 2 um einshyrnda þríhyrninga", a: "Tveir þríhyrningar eru einshyrndir þá og því aðeins að hlutföll milli tilsvarandi hliða séu jöfn.", f: "a/a₁ = b/b₁ = c/c₁" },
+  { c: 3, p: 15, q: "Langhlið og skammhliðar", a: "Í rétthyrndum þríhyrningi er langhlið sú hlið sem er mótlæg rétta horninu. Hinar tvær eru skammhliðar." },
+  { c: 3, p: 15, q: "Regla 3: Regla Pýþagórasar og andhverfa hennar", a: "Þríhyrningur er rétthyrndur þá og því aðeins að summan af ferningstölum skammhliðanna sé jöfn ferningstölu langhliðarinnar.", f: "C = 90° ⇔ a² + b² = c²" },
+  { c: 5, p: 23, q: "Spanna og miðhorn", a: "Horn spannar þann boga á hring sem verður milli arma þess. Horn með oddpunkt í miðju hrings kallast miðhorn. Miðhorn er að gráðutali jafnt boganum sem það spannar.", f: "x = u" },
+  { c: 5, p: 23, q: "Skilgreining 9: Ferilhorn", a: "Horn sem hefur oddpunkt á hring og strengi fyrir arma kallast ferilhorn í hringnum." },
+  { c: 5, p: 23, q: "Regla 10 um ferilhorn", a: "Ferilhorn er að gráðutali jafnt hálfum boganum sem það spannar.", f: "x = u / 2" },
+  { c: 5, p: 25, q: "Sniðill, snertill og snertipunktur", a: "Lína sem sker hring í tveimur punktum er sniðill. Snertill er lína sem liggur um punkt á hringnum og er hornrétt á geislann til þess punkts. Hann hefur aðeins einn punkt sameiginlegan með hringnum, snertipunktinn." },
+  { c: 5, p: 25, q: "Skilgreining 10: Umritaður og innritaður hringur", a: "Hringur sem liggur um alla hornpunkta þríhyrnings kallast umritaður hringur hans. Hringur sem snertir allar hliðar þríhyrningsins kallast innritaður hringur hans." }
+];
+const kaflaNames = { 1: "Kafli 1 · Inngangur", 2: "Kafli 2 · Einslæg horn og samsíða línur", 3: "Kafli 3 · Einshyrndir þríhyrningar og regla Pýþagórasar", 5: "Kafli 5 · Horn og hringbogar" };
+const rl = document.getElementById("rulesList");
+[1, 2, 3, 5].forEach(c => {
+  const div = document.createElement("div");
+  div.className = "kafli";
+  div.innerHTML = `<h3>${kaflaNames[c]}</h3>` + rules.filter(r => r.c === c).map(r =>
+    `<div class="rule"><span class="page">bls. ${r.p}</span><div class="rt">${r.q}</div><div class="rb">${r.a}</div>${r.f ? `<div class="rf">${r.f}</div>` : ""}</div>`).join("");
+  rl.appendChild(div);
+});
+
+/* ---------- Proof hide toggles ---------- */
+document.querySelectorAll("[data-toggle]").forEach(btn => btn.addEventListener("click", () => {
+  const p = btn.closest(".hideable");
+  p.classList.toggle("hidden");
+  btn.textContent = p.classList.contains("hidden") ? "Sýna skrefin" : "Fela skrefin";
+}));
+
+/* ---------- Flashcards ---------- */
+const knownKey = "fm-known";
+let known = store.get(knownKey, {});
+let deck = [], pos = 0, flipped = false;
+const card = document.getElementById("fcCard");
+function buildDeck(shuffle) {
+  const f = document.getElementById("fcFilter").value;
+  deck = rules.map((r, i) => i).filter(i => (f === "all" || rules[i].c == f) && !known[i]);
+  if (shuffle) for (let i = deck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [deck[i], deck[j]] = [deck[j], deck[i]]; }
+  pos = 0; flipped = false; renderCard();
+}
+function renderCard() {
+  const f = document.getElementById("fcFilter").value;
+  const total = rules.filter(r => f === "all" || r.c == f).length;
+  const left = deck.length;
+  document.getElementById("fcCount").textContent = `${total - left} af ${total} kunn`;
+  const btns = [document.getElementById("fcKnow"), document.getElementById("fcAgain")];
+  if (!left) {
+    card.innerHTML = `<span class="side">Búið</span><span class="q">Öll spjöldin í þessum bunka eru komin í „Kann þetta“.</span><span class="a">Veldu „Byrja upp á nýtt“ til að fara aftur yfir þau.</span>`;
+    btns.forEach(b => b.disabled = true);
+    return;
+  }
+  btns.forEach(b => b.disabled = false);
+  const r = rules[deck[pos % left]];
+  card.innerHTML = flipped
+    ? `<span class="side">Svar · kafli ${r.c}, bls. ${r.p}</span><span class="a">${r.a}${r.f ? `<span class="rf">${r.f}</span>` : ""}</span>`
+    : `<span class="side">Spurning · kafli ${r.c} · smelltu til að snúa</span><span class="q">${r.q}</span>`;
+}
+card.addEventListener("click", () => { if (!deck.length) return; flipped = !flipped; renderCard(); });
+document.getElementById("fcKnow").addEventListener("click", () => {
+  if (!deck.length) return;
+  known[deck[pos % deck.length]] = true; store.set(knownKey, known);
+  deck.splice(pos % deck.length, 1); flipped = false; renderCard();
+});
+document.getElementById("fcAgain").addEventListener("click", () => {
+  if (!deck.length) return;
+  pos = (pos + 1) % deck.length; flipped = false; renderCard();
+});
+document.getElementById("fcShuffle").addEventListener("click", () => buildDeck(true));
+document.getElementById("fcReset").addEventListener("click", () => {
+  const f = document.getElementById("fcFilter").value;
+  rules.forEach((r, i) => { if (f === "all" || r.c == f) delete known[i]; });
+  store.set(knownKey, known); buildDeck(true);
+});
+document.getElementById("fcFilter").addEventListener("change", () => buildDeck(true));
+buildDeck(true);
+
+/* ---------- Practice problems ---------- */
+const probs = [
+  { q: "Tvö horn eru frændhorn og annað er fjórum sinnum stærra en hitt. Hve stór eru hornin?", h: "Kafli 1 · frændhorn", a: "x + 4x = 180° ⇒ 5x = 180° ⇒ x = 36°. Hornin eru <b>36° og 144°</b>." },
+  { q: "Tvær línur skerast og eitt hornið er 63°. Hve stór eru hin þrjú hornin?", h: "Kafli 1 · topphorn og grannhorn", a: "Topphornið er líka 63°. Grannhornin eru 180° − 63° = 117°. Svar: <b>63°, 117° og 117°</b>." },
+  { q: "Línurnar l og m eru samsíða og skornar af línu s. Tvö einslæg horn eru (3x + 10)° og (5x − 30)°. Finnið x og stærð hornanna.", h: "Kafli 2 · frumregla 1", a: "Einslæg horn eru jafnstór: 3x + 10 = 5x − 30 ⇒ 40 = 2x ⇒ <b>x = 20</b>. Hornin eru <b>70°</b>." },
+  { q: "Í ΔABC er A = (x + 20)°, B = 2x° og C = (3x − 20)°. Finnið hornin.", h: "Kafli 2 · regla 1", a: "x + 20 + 2x + 3x − 20 = 180 ⇒ 6x = 180 ⇒ x = 30. Svar: <b>A = 50°, B = 60°, C = 70°</b>." },
+  { q: "Í ΔABC er A = 48° og B = 67°. Hve stórt er grannhorn hornsins C?", h: "Kafli 2 · regla 2", a: "Grannhorn C = A + B = 48° + 67° = <b>115°</b>. (Athugun: C = 65° og 65° + 115° = 180°.)" },
+  { q: "Hver er hornasumma sexhyrnings? Hve stórt er hvert horn ef öll hornin eru jafnstór?", h: "Kafli 2 · n-hyrningur", a: "(6 − 2)·180° = <b>720°</b>. Hvert horn: 720° / 6 = <b>120°</b>." },
+  { q: "Þrjú horn í ferhyrningi eru 80°, 95° og 110°. Hve stórt er fjórða hornið?", h: "Kafli 2 · ferhyrningur", a: "360° − (80° + 95° + 110°) = <b>75°</b>." },
+  { q: "Í rétthyrndum þríhyrningi eru skammhliðarnar 6 og 8. Hve löng er langhliðin?", h: "Kafli 3 · Pýþagóras", a: "c² = 6² + 8² = 36 + 64 = 100 ⇒ <b>c = 10</b>." },
+  { q: "Þríhyrningur hefur hliðarnar 7, 24 og 25. Er hann rétthyrndur?", h: "Kafli 3 · andhverfa Pýþagórasar", a: "7² + 24² = 49 + 576 = 625 = 25². Samkvæmt andhverfu reglunnar er hann <b>rétthyrndur</b> (rétta hornið er á móti hliðinni 25)." },
+  { q: "ΔABC ~ ΔDEF. AB = 6, BC = 9, AC = 12 og DE = 4. Finnið EF og DF.", h: "Kafli 3 · frumregla 2", a: "Hlutfallið er DE / AB = 4/6 = 2/3. EF = 9 · 2/3 = <b>6</b> og DF = 12 · 2/3 = <b>8</b>." },
+  { q: "Miðhorn í hring er 110°. Hve stórt er ferilhorn sem spannar sama boga?", h: "Kafli 5 · regla 10", a: "Boginn er 110° (miðhorn = boginn). Ferilhornið er helmingurinn: <b>55°</b>." },
+  { q: "AB er miðstrengur í hring og C er punktur á hringnum. Hve stórt er ∠ACB?", h: "Kafli 5 · regla 10", a: "∠ACB er ferilhorn sem spannar hálfhring, þ.e. 180° boga. Skv. reglu 10 er það 180° / 2 = <b>90°</b>." }
+];
+document.getElementById("probs").innerHTML = probs.map(p =>
+  `<details class="prob"><summary><span>${p.q}</span><span class="hint">${p.h}</span></summary><div class="ans">${p.a}</div></details>`).join("");
+</script>
+</body>
+</html>
