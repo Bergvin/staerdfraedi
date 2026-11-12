@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Algebra – prófundirbúningur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <nav class="subjects" aria-label="Námsgreinar">
+      <a href="./">Flatarmyndir</a>
+      <a href="algebra.html" aria-current="page">Algebra</a>
+    </nav>
+    <div class="eyebrow">Stærðfræði · 1. bekkur MR</div>
+    <h1>Algebra – prófundirbúningur</h1>
+    <p class="lede">Mengi, yrðingar, rauntölur, jöfnur, ójöfnur og tölugildi. Hér eru allar innrammaðar reglur og skilgreiningar, allar sannanir sem enda á ■ skref fyrir skref, spjöld og æfingadæmi með svörum. Hakaðu við jafnóðum, framvindan vistast í þessum vafra.</p>
+    <div class="scope">
+      <span class="chip">1.1 Mengi og yrðingar</span>
+      <span class="chip">1.2 Rauntölur</span>
+      <span class="chip">1.3 Röðun</span>
+      <span class="chip">1.4 Jöfnur</span>
+      <span class="chip">1.5 Ójöfnur</span>
+      <span class="chip">1.6 Tölugildi</span>
+      <span class="chip red">9 sannanir</span>
+    </div>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Kaflar síðunnar">
+  <div class="wrap">
+    <a href="#plan">Planið</a>
+    <a href="#sannanir">Sannanir</a>
+    <a href="#reglur">Reglur</a>
+    <a href="#spjold">Spjöld</a>
+    <a href="#aefing">Æfingadæmi</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="plan">
+  <div class="sec-head">
+    <h2>Námsplanið</h2>
+    <p>Sjö lotur, hver um 45–60 mínútur. Í algebrunni eru sannanirnar aðalatriðið, svo hver lota endar á því að skrifa sönnun á autt blað. Ef stutt er í prófið má sameina lotur 1+2 og 3+4.</p>
+  </div>
+  <div class="progress"><span id="progText">0 af 0 atriðum</span><div class="meter"><i id="progBar"></i></div></div>
+  <div class="sessions" id="sessions"></div>
+  <div class="tip"><strong>Merkt „þri“ í heftinu:</strong> Kennarinn hefur skrifað „þri“ og „Próf á þri“ með rauðu við sannanirnar á Reglu 1.6, HR1.3, Reglu 1.9 og Reglu 1.10. Þær eru merktar eins hér fyrir neðan og fá forgang.</div>
+</section>
+
+<section id="sannanir">
+  <div class="sec-head">
+    <h2>Sannanirnar</h2>
+    <p>Allar sannanir í heftinu sem enda á svörtum ferhyrningi ■, í sömu röð og í heftinu. Smelltu á „Fela skrefin“, skrifaðu sönnunina á blað og berðu svo saman. Í sviga aftast í línu stendur hvaða regla er notuð. Það er gott að venja sig á að skrifa það líka.</p>
+  </div>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>HR1.1 · Ef n er oddatala er n² oddatala <span class="page">bls. 26</span></h3>
+      <ol>
+        <li>Gerum ráð fyrir að n sé oddatala, n = 2k + 1, þar sem k er heil tala.</li>
+        <li>Þá fæst <span class="eq">n² = (2k + 1)² = 4k² + 4k + 1 = 2(2k² + 2k) + 1 = 2m + 1</span></li>
+        <li>sem er oddatala því að m = 2k² + 2k er heil tala. <span class="qed">■</span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>HR1.2 · Ef n er heil tala og n² slétt er n slétt <span class="page">bls. 27</span></h3>
+      <ol>
+        <li>Gerum ráð fyrir að n sé heil tala og n² slétt.</li>
+        <li>Þá getur n ekki verið oddatala, því að þá væri n² líka oddatala skv. HR1.1.</li>
+        <li>Því er n slétt tala. <span class="qed">■</span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Regla 1.5 · Jafnan x² = 2 hefur enga ræða lausn <span class="page">bls. 27</span></h3>
+      <p class="stmt">Þ.e. √2 er óræð tala. Sönnun með mótsögn.</p>
+      <ol>
+        <li>Gerum ráð fyrir að x² = 2 hafi ræða lausn og ritum hana sem <em>fullstytt brot</em> x = p/q, þar sem p og q eru heilar tölur og q ≠ 0.</li>
+        <li>Þá er <span class="eq">(p/q)² = 2, þ.e. p²/q² = 2, og þá p² = 2q² &nbsp;(*)</span></li>
+        <li>Þá er p² slétt tala svo að <em>p er slétt</em> skv. HR1.2. Þá er til heil tala k þannig að p = 2k.</li>
+        <li>Af (*) leiðir <span class="eq">2q² = p² = (2k)² = 4k² &nbsp;svo að&nbsp; q² = 2k²</span></li>
+        <li>Þá er q² slétt tala svo að <em>q er slétt</em> skv. HR1.2.</li>
+        <li>Þá eru p og q báðar sléttar svo að stytta má brotið p/q með 2. En það stangast á við að brotið væri fullstytt.</li>
+        <li>Forsendan um að x² = 2 hafi ræða lausn leiðir því til mótsagnar og fær ekki staðist. <span class="qed">■</span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Regla 1.6 · Að leysa einfaldar jöfnur <span class="flag">þri</span> <span class="page">bls. 31–32</span></h3>
+      <p class="stmt">1) a + b = c ⇔ a = c − b &nbsp;&nbsp; 2) Ef b ≠ 0: ab = c ⇔ a = c/b</p>
+      <ol>
+        <li>1) Auðveldlega fæst: <span class="eq">a + b = c ⇔ a + b + (−b) = c + (−b) ⇔ a + 0 = c − b ⇔ a = c − b</span></li>
+        <li>2) Ef b ≠ 0 fæst eins: <span class="eq">ab = c ⇔ ab(1/b) = c(1/b) ⇔ a · 1 = c/b ⇔ a = c/b <span class="qed">■</span></span></li>
+      </ol>
+      <p class="note">Hugmyndin: leggja −b við báðar hliðar (andhverfa við samlagningu, F4), eða margfalda báðar hliðar með 1/b (andhverfa við margföldun, F4). Svo hlutleysureglan (F3).</p>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>HR1.3 · x² + bx + (b/2)² = (x + b/2)² <span class="flag">þri</span> <span class="page">bls. 37–38</span></h3>
+      <ol>
+        <li>Skv. ferningsreglunni (a + b)² = a² + 2ab + b² fæst: <span class="eq">(x + b/2)² = x² + 2 · x · (b/2) + (b/2)² = x² + bx + (b/2)² <span class="qed">■</span></span></li>
+      </ol>
+      <p class="note">Að bæta (b/2)² við x² + bx kallast að <em>fylla ferninginn</em>: hálfur stuðullinn við x er hafinn í 2. veldi og lagður við.</p>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Regla 1.9 · Lausn 2. stigs jöfnu <span class="flag">þri</span> <span class="page">bls. 39–40</span></h3>
+      <p class="stmt">Ef A ≠ 0 hefur Ax² + Bx + C = 0 með greini D = B² − 4AC: tvær lausnir x = (−B ± √D)/(2A) ef D &gt; 0, eina lausn x = −B/(2A) ef D = 0 og enga rauntölulausn ef D &lt; 0.</p>
+      <ol>
+        <li>Þar eð A ≠ 0 má deila með A og færa C/A yfir: <span class="eq">Ax² + Bx + C = 0 ⇔ x² + (B/A)x = −C/A</span></li>
+        <li>Fyllum ferninginn (HR1.3), leggjum (B/(2A))² við báðar hliðar: <span class="eq">x² + (B/A)x + (B/(2A))² = −C/A + (B/(2A))²</span></li>
+        <li><span class="eq">⇔ (x + B/(2A))² = −C/A + B²/(4A²)</span></li>
+        <li>Setjum á samnefnara: <span class="eq">⇔ (x + B/(2A))² = (B² − 4AC)/(4A²) = D/(4A²) &nbsp;(*)</span></li>
+        <li>Þar sem 4A² &gt; 0 hefur D/(4A²) sama formerki og D. Nú getur þrennt verið:</li>
+        <li><b>D &gt; 0:</b> <span class="eq">(*) ⇔ x + B/(2A) = ±√D/(2A) ⇔ x = −B/(2A) ± √D/(2A) ⇔ x = (−B ± √D)/(2A)</span></li>
+        <li><b>D = 0:</b> <span class="eq">(*) ⇔ (x + B/(2A))² = 0 ⇔ x + B/(2A) = 0 ⇔ x = −B/(2A)</span></li>
+        <li><b>D &lt; 0:</b> Þá er neikvæð tala hægra megin í (*) en jákvæð tala eða 0 vinstra megin. Jafnan fær þá ekki staðist og hefur enga rauntölulausn. <span class="qed">■</span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Regla 1.10 · Einfaldar ójöfnur <span class="flag">Próf á þri</span> <span class="page">bls. 46</span></h3>
+      <p class="stmt">Um öll a, b, c ∈ ℝ: 1) a &gt; b ⇔ a + c &gt; b + c &nbsp; 2) a &gt; b ⇔ ac &gt; bc ef c &gt; 0 &nbsp; 3) a &gt; b ⇔ ac &lt; bc ef c &lt; 0</p>
+      <ol>
+        <li><b>1)</b> <span class="eq">a + c &gt; b + c ⇔ ((a + c) − (b + c)) ∈ ℝ₊ &nbsp;(skilgreining á &gt;)</span><span class="eq">⇔ (a − b) ∈ ℝ₊ &nbsp;(reiknireglur)</span><span class="eq">⇔ a &gt; b &nbsp;(skilgreining á &gt;)</span></li>
+        <li><b>2)</b> <span class="eq">a &gt; b ⇔ (a − b) ∈ ℝ₊ &nbsp;(skilgreining á &gt;)</span><span class="eq">⇔ (a − b)c ∈ ℝ₊ &nbsp;(formerkjaregla, c ∈ ℝ₊)</span><span class="eq">⇔ (ac − bc) ∈ ℝ₊ &nbsp;(dreifiregla)</span><span class="eq">⇔ ac &gt; bc &nbsp;(skilgreining á &gt;)</span></li>
+        <li><b>3)</b> <span class="eq">a &gt; b ⇔ (a − b) ∈ ℝ₊ &nbsp;(skilgreining á &gt;)</span><span class="eq">⇔ (a − b)c ∈ ℝ₋ &nbsp;(formerkjaregla, c ∈ ℝ₋)</span><span class="eq">⇔ (ac − bc) ∈ ℝ₋ &nbsp;(dreifiregla)</span><span class="eq">⇔ ac &lt; bc &nbsp;(skilgreining á &lt;) <span class="qed">■</span></span></li>
+      </ol>
+      <p class="note">Mikilvægasta afleiðingin: ójöfnumerki snýst við ef báðar hliðar eru margfaldaðar með neikvæðri tölu.</p>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Regla 1.11 (1) · |t|² = t² <span class="page">bls. 53</span></h3>
+      <ol>
+        <li>Skv. skilgreiningu tölugildis fæst strax:</li>
+        <li>Ef t ≥ 0 er |t| = t, svo |t|² = t².</li>
+        <li>Ef t &lt; 0 er |t| = −t, svo <span class="eq">|t|² = (−t)² = t²</span></li>
+        <li>Í báðum tilvikum gildir |t|² = t². <span class="qed">■</span></li>
+      </ol>
+      <p class="note">Sannanirnar á liðum 2–5 í Reglu 1.11 eru á bls. 54, sem var ekki á myndunum. Kíkið á þær í heftinu.</p>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Regla 1.12 · Að hefja í annað veldi <span class="page">bls. 57</span></h3>
+      <p class="stmt">Ef a ≥ 0 og b ≥ 0 gildir: 1) a = b ⇔ a² = b² &nbsp; 2) a &gt; b ⇔ a² &gt; b²</p>
+      <ol>
+        <li><b>1)</b> Gerum ráð fyrir að a ≥ 0 og b ≥ 0. Þar eð b ≥ 0 er √(b²) = b, svo <span class="eq">a² = b² ⇔ a = ±√(b²) ⇔ a = ±b ⇔ a = b</span> því að a ≥ 0 og b ≥ 0.</li>
+        <li><b>2)</b> Gerum ráð fyrir að a &gt; 0 og b ≥ 0. Þá er (a + b) ∈ ℝ₊ svo að Regla 1.10 gefur: <span class="eq">a &gt; b ⇔ (a − b) &gt; 0 ⇔ (a − b)(a + b) &gt; 0 · (a + b)</span><span class="eq">⇔ a² − b² &gt; 0 ⇔ a² &gt; b² <span class="qed">■</span></span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+
+  <article class="proof nofig hideable">
+    <div class="txt">
+      <h3>Aukalega · Æfing 1.3.2: a &gt; b ∧ b &gt; c ⇒ a &gt; c <span class="page">bls. 25</span></h3>
+      <p class="stmt">Heftið segir að nemendur eigi að sanna þetta sjálf. Svona má gera það:</p>
+      <ol>
+        <li>a &gt; b þýðir (a − b) ∈ ℝ₊ og b &gt; c þýðir (b − c) ∈ ℝ₊ &nbsp;(skilgreining á &gt;)</li>
+        <li>Summa jákvæðra talna er jákvæð (formerkjaregla), svo <span class="eq">(a − b) + (b − c) ∈ ℝ₊</span></li>
+        <li>En (a − b) + (b − c) = a − c &nbsp;(reiknireglur), svo (a − c) ∈ ℝ₊, þ.e. a &gt; c. <span class="qed">■</span></li>
+      </ol>
+      <button class="btn" type="button" data-toggle>Fela skrefin</button>
+    </div>
+  </article>
+</section>
+
+<section id="reglur">
+  <div class="sec-head">
+    <h2>Allar skilgreiningar og reglur</h2>
+    <p>Allt innrammað efni af myndunum, raðað eftir greinum heftisins.</p>
+  </div>
+  <div id="rulesList"></div>
+  <p class="missing">Á myndunum vantaði m.a. bls. 5 (mengjamunur og fyllimengi), bls. 19–24 (frumreglur um formerki) og bls. 54. Skilgreiningarnar á mengjamun og fyllimengi hér eru þær hefðbundnu. Berið þær saman við heftið.</p>
+</section>
+
+<section id="spjold">
+  <div class="sec-head">
+    <h2>Spjöld</h2>
+    <p>Lestu spurninguna, segðu svarið upphátt eða skrifaðu það og snúðu svo spjaldinu. Spjöld sem fara í „Æfa meira“ koma aftur.</p>
+  </div>
+  <div class="fc-controls">
+    <label for="fcFilter" class="tag">Grein</label>
+    <select id="fcFilter">
+      <option value="all">Allar greinar</option>
+      <option value="1.1">1.1 Mengi og yrðingar</option>
+      <option value="1.2">1.2 Rauntölur</option>
+      <option value="1.3">1.3 Röðun</option>
+      <option value="1.4">1.4 Jöfnur</option>
+      <option value="1.5">1.5 Ójöfnur</option>
+      <option value="1.6">1.6 Tölugildi</option>
+    </select>
+    <button class="btn" type="button" id="fcShuffle">Stokka</button>
+    <button class="btn" type="button" id="fcReset">Byrja upp á nýtt</button>
+    <span class="fc-count" id="fcCount"></span>
+  </div>
+  <button class="card" type="button" id="fcCard" aria-live="polite"></button>
+  <div class="fc-actions">
+    <button class="btn bad" type="button" id="fcAgain">Æfa meira</button>
+    <button class="btn good" type="button" id="fcKnow">Kann þetta</button>
+  </div>
+</section>
+
+<section id="aefing">
+  <div class="sec-head">
+    <h2>Æfingadæmi</h2>
+    <p>Reiknaðu fyrst á blað og smelltu svo á dæmið til að sjá svarið.</p>
+  </div>
+  <div class="probs" id="probs"></div>
+</section>
+
+</main>
+<footer><div class="wrap">Byggt á algebruhefti 1. bekkjar (kafli 1). Blaðsíðutöl vísa í heftið.</div></footer>
+
+<script>
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
+/* ---------- Plan ---------- */
+const sessions = [
+  { t: "Mengi og yrðingar", k: "1.1 · bls. 1–8", tasks: [
+    "Lesa um mengi: ℤ, ℕ, Ø, hlutmengi, sniðmengi, sammengi, mengjamun og fyllimengi",
+    "Teikna Venn-myndir af A ∩ B og A ∪ B",
+    "Yrðingar: ¬p, p ∧ q, p ∨ q, opnar yrðingar, sannmengi, ∀ og ∃",
+    "Spjöldin fyrir grein 1.1"
+  ]},
+  { t: "Frumreglur og reikniaðgerðir", k: "1.2 · bls. 13–21", tasks: [
+    "Læra frumreglur F1–F5 með nöfnum (víxl-, tengi-, hlutleysu-, andhverfu-, dreifiregla)",
+    "Ræðar tölur ℚ og Z ⊂ ℚ",
+    "Samokareglurnar þrjár, stytting, samdráttur og deiling brota",
+    "Spjöldin fyrir grein 1.2 og æfingadæmi 4–6"
+  ]},
+  { t: "Röðun og √2 er óræð", k: "1.3 · bls. 22–27", tasks: [
+    "F6, ℝ₋, {0}, ℝ₊ og Skilgreining 1.5 um formerki",
+    "Skilgreining á > og Dæmi 1.16 (x > y ⇔ y < x)",
+    "Sanna HR1.1 og HR1.2 á autt blað",
+    "Sanna Reglu 1.5 (√2 er óræð) á autt blað"
+  ]},
+  { t: "Jöfnur og rætur", k: "1.4 · bls. 31–38", tasks: [
+    "Sanna Reglu 1.6 á autt blað (merkt þri)",
+    "Núllreglan, Regla 1.8 og Skilgreining 1.7 um n-tu rót",
+    "Sanna HR1.3 á autt blað (merkt þri)",
+    "Fylla ferninginn: æfingadæmi 11 og 12"
+  ]},
+  { t: "Annars stigs jöfnur", k: "1.4 · bls. 39–42", tasks: [
+    "Skilgreining 1.8: stuðlar og greinir D = B² − 4AC",
+    "Sanna Reglu 1.9 á autt blað, öll þrjú tilvikin (merkt þri)",
+    "Rætur fyrir slétt og odda n",
+    "Æfingadæmi 7–10"
+  ]},
+  { t: "Ójöfnur og tölugildi", k: "1.5–1.6 · bls. 46–57", tasks: [
+    "Sanna Reglu 1.10 á autt blað, alla þrjá liði (Próf á þri)",
+    "Formerki margfelda og formerkjatöflur",
+    "Skilgreining 1.9, Regla 1.11 og sönnun á lið 1",
+    "Sanna Reglu 1.12",
+    "Æfingadæmi 13–16"
+  ]},
+  { t: "Stóra upprifjunin", k: "Allt efnið", tasks: [
+    "Skrifa allar 9 sannanirnar á autt blað, fyrst þær sem eru merktar þri",
+    "Öll spjöldin þar til allt er í „Kann þetta“",
+    "Endurreikna dæmi sem gengu illa"
+  ]}
+];
+const doneKey = "alg-plan-done";
+let done = store.get(doneKey, {});
+const sEl = document.getElementById("sessions");
+sessions.forEach((s, i) => {
+  const art = document.createElement("article");
+  art.className = "session";
+  art.innerHTML = `<div class="s-top"><span class="s-num">Lota ${i + 1}</span><h3>${s.t}</h3><span class="s-meta">${s.k}</span></div>
+    <ul class="tasks">${s.tasks.map((t, j) => `<li><label><input type="checkbox" id="a${i}-${j}" data-id="${i}-${j}"><span>${t}</span></label></li>`).join("")}</ul>`;
+  sEl.appendChild(art);
+});
+function refreshPlan() {
+  const boxes = [...document.querySelectorAll(".tasks input")];
+  boxes.forEach(b => b.checked = !!done[b.dataset.id]);
+  document.querySelectorAll(".session").forEach(art => {
+    art.classList.toggle("done", [...art.querySelectorAll("input")].every(b => b.checked));
+  });
+  const n = boxes.filter(b => b.checked).length;
+  document.getElementById("progText").textContent = `${n} af ${boxes.length} atriðum`;
+  document.getElementById("progBar").style.width = (100 * n / boxes.length) + "%";
+}
+sEl.addEventListener("change", e => {
+  if (!e.target.dataset.id) return;
+  done[e.target.dataset.id] = e.target.checked;
+  store.set(doneKey, done);
+  refreshPlan();
+});
+refreshPlan();
+
+/* ---------- Rules ---------- */
+const rules = [
+  { c: "1.1", p: 2, q: "Mengi heilla talna ℤ", f: "ℤ = {…, −3, −2, −1, 0, 1, 2, 3, …}", a: "Mengi og stak eru frumhugtök. x ∈ M þýðir að x sé stak í M, x ∉ M að x sé ekki stak í M." },
+  { c: "1.1", p: 3, q: "Jákvæðar heilar tölur og náttúrulegar tölur", f: "ℤ₊ = {x ∈ ℤ | x > 0}, &nbsp; ℕ = ℤ₊ = {1, 2, 3, …}", a: "Mengi jákvæðra heilla talna er líka táknað ℕ og kallað mengi náttúrulegra talna." },
+  { c: "1.1", p: 3, q: "Tóma mengið", f: "Ø = { }", a: "Mengið sem hefur ekkert stak. Tóma mengið er hlutmengi af sérhverju mengi og sérhvert mengi er hlutmengi af sjálfu sér." },
+  { c: "1.1", p: 3, q: "Skilgreining 1.1: Hlutmengi og eiginlegt hlutmengi", a: "1) Mengi A kallast hlutmengi af mengi B ef sérhvert stak í A er líka stak í B. Táknað A ⊆ B. 2) Ef A ⊆ B og B hefur að minnsta kosti eitt stak umfram A kallast A eiginlegt hlutmengi af B. Táknað A ⊂ B." },
+  { c: "1.1", p: 4, q: "Grunnmengi", a: "Ef öll mengin sem um er rætt eru hlutmengi af sama mengi kallast það mengi grunnmengi, táknað G. Mengi með n stök á 2ⁿ hlutmengi." },
+  { c: "1.1", p: 4, q: "Skilgreining 1.2: Sniðmengi og sammengi", f: "A ∩ B = {x ∈ G | x ∈ A og x ∈ B}<br>A ∪ B = {x ∈ G | x ∈ A eða x ∈ B}", a: "1) Sniðmengi A og B er mengi þeirra staka sem eru í báðum mengjunum, lesið „A snið B“. 2) Sammengi A og B er mengi þeirra staka sem eru í öðru þeirra að minnsta kosti, lesið „A sam B“." },
+  { c: "1.1", p: 5, q: "Mengjamunur og fyllimengi", f: "A \\ B = {x ∈ G | x ∈ A og x ∉ B}, &nbsp; ∁A = G \\ A", a: "Mengjamunur A \\ B er mengi þeirra staka í A sem eru ekki í B. Fyllimengi A er mengi þeirra staka í grunnmenginu sem eru ekki í A. (Bls. 5 var ekki á myndunum, berið saman við heftið.)" },
+  { c: "1.1", p: 6, q: "Yrðing", a: "Með yrðingu er átt við staðhæfingu sem er annaðhvort sönn eða ósönn." },
+  { c: "1.1", p: 6, q: "Neitun, „og“ og „eða“", f: "¬p, &nbsp; p ∧ q, &nbsp; p ∨ q", a: "1) ¬p, „ekki p“ (neitun p): sú yrðing að p sé ósönn. 2) p ∧ q, „p og q“: að p og q séu báðar sannar. 3) p ∨ q, „p eða q“: að a.m.k. önnur yrðinganna p eða q sé sönn." },
+  { c: "1.1", p: 7, q: "Opin yrðing", a: "Opin yrðing með grunnmengi G er staðhæfing sem fjallar um óþekkta stærð og verður að yrðingu þegar stak úr G er sett í stað óþekktu stærðarinnar. Táknuð p(x), q(x) o.s.frv." },
+  { c: "1.1", p: 7, q: "Sannmengi opinnar yrðingar", f: "P = {a ∈ G | p(a)}", a: "Sannmengi opinnar yrðingar p(x) með grunnmengi G er mengi þeirra staka í G sem gefa sanna yrðingu þegar þau eru sett í stað x. Lausnamengi jöfnu er táknað L." },
+  { c: "1.1", p: 8, q: "Sannmengi og mengjaaðgerðir", f: "∁P = {x ∈ G | ¬p(x)}<br>P ∩ Q = {x ∈ G | p(x) ∧ q(x)}<br>P ∪ Q = {x ∈ G | p(x) ∨ q(x)}", a: "Táknin ¬, ∧, ∨ tengjast mengjaaðgerðunum ∁, ∩ og ∪." },
+  { c: "1.1", p: 8, q: "Magnmerkin ∀ og ∃", f: "∀x ∈ M: p(x) &nbsp;&nbsp; ∃x ∈ M: p(x)", a: "∀: „um sérhvert x ∈ M gildir að p(x) er sönn“. ∃: „til er það x ∈ M að p(x) er sönn“." },
+  { c: "1.2", p: 13, q: "F1 og F2: Víxlreglur og tengireglur", f: "a + b = b + a, &nbsp; a·b = b·a<br>a + (b + c) = (a + b) + c, &nbsp; a·(b·c) = (a·b)·c", a: "Frumreglur um samlagningu og margföldun. Gilda um öll a, b, c ∈ ℝ." },
+  { c: "1.2", p: 13, q: "F3: Hlutleysureglur", f: "a + 0 = a, &nbsp; a · 1 = a", a: "Til eru tvær tölur 0 ∈ ℝ og 1 ∈ ℝ þannig að 0 ≠ 1 og um öll a ∈ ℝ gildir a + 0 = a og a · 1 = a. 0 er samlagningarhlutleysa og 1 margföldunarhlutleysa." },
+  { c: "1.2", p: 13, q: "F4: Andhverfureglur", f: "a + (−a) = 0, &nbsp; a · (1/a) = 1 ef a ≠ 0", a: "Um öll a ∈ ℝ er til tala −a ∈ ℝ þannig að a + (−a) = 0. Um öll a ∈ ℝ \\ {0} er til tala 1/a ∈ ℝ þannig að a · (1/a) = 1. −a er samlagningarandhverfa a og 1/a margföldunarandhverfa." },
+  { c: "1.2", p: 13, q: "F5: Dreifiregla", f: "a·(b + c) = a·b + a·c", a: "Gildir um öll a, b, c ∈ ℝ. Af henni fæst (a + b)(c + d) = ac + ad + bc + bd." },
+  { c: "1.2", p: 17, q: "Ræðar tölur ℚ", f: "ℚ = {x ∈ ℝ | x = p/q þar sem p, q ∈ ℤ, q ≠ 0}", a: "ℤ er eiginlegt hlutmengi af ℚ: ℤ ⊂ ℚ (t.d. 17 = 17/1 en 1/2 ∉ ℤ)." },
+  { c: "1.2", p: 18, q: "Samokareglurnar", f: "a² + 2ab + b² = (a + b)²<br>a² − 2ab + b² = (a − b)²<br>a² − b² = (a + b)(a − b)", a: "Fyrstu tvær kallast ferningsreglur, sú þriðja samokaregla. Notaðar til að þátta." },
+  { c: "1.2", p: 18, q: "Stytting og samdráttur brota", f: "ac / bc = a / b ef c ≠ 0<br>a/c + b/c = (a + b)/c", a: "Bein afleiðing af einfaldari reglu og skilgreiningu deilingar." },
+  { c: "1.2", p: "~21", q: "Deiling brota og brotabrot", f: "(a/b) : (c/d) = (a/b) · (d/c)", a: "Brotabrotum er eytt með því að lengja með samnefnara brotanna: (a/b)/(c/d) = (a/b)bd / (c/d)bd = ad/bc." },
+  { c: "1.3", p: "~22", q: "F6: Frumregla um formerki tölunnar 0", f: "ℝ = ℝ₋ ∪ {0} ∪ ℝ₊", a: "Talan 0 er ekki jákvæð. ℝ₋ = ℝ \\ (ℝ₊ ∪ {0}) er mengi neikvæðra rauntalna. ℝ skiptist í þrjú sundurlæg mengi ℝ₋, {0} og ℝ₊." },
+  { c: "1.3", p: "~22", q: "Skilgreining 1.5: Sama og gagnstætt formerki", a: "Tvær rauntölur hafa sama formerki ef báðar eru jákvæðar eða báðar neikvæðar, en gagnstæð formerki ef önnur er jákvæð en hin neikvæð." },
+  { c: "1.3", p: 25, q: "Skilgreining á > og ≥", f: "x > y ⇔ (x − y) ∈ ℝ₊<br>x ≥ y ⇔ x > y ∨ x = y, &nbsp; x ≤ y ⇔ x < y ∨ x = y", a: "Af þessu fæst t.d. x > y ⇔ y < x (Dæmi 1.16) og a > b ∧ b > c ⇒ a > c (Æfing 1.3.2)." },
+  { c: "1.3", p: 26, q: "Óræðar tölur", f: "ℚ ⊂ ℝ", a: "Óræð tala er rauntala sem ekki er ræð. Mengi óræðra talna er ℝ \\ ℚ. Dæmi: √2." },
+  { c: "1.3", p: 26, q: "Sléttar tölur og oddatölur", f: "n slétt ⇔ ∃k ∈ ℤ: n = 2k<br>n oddatala ⇔ ∃k ∈ ℤ: n = 2k + 1", a: "Sléttar tölur eru heilar tölur sem 2 ganga upp í, hinar kallast oddatölur." },
+  { c: "1.3", p: 26, q: "HR1.1 og HR1.2", a: "HR1.1: Ef n er oddatala er n² oddatala. HR1.2: Ef n er heil tala og n² slétt er n slétt. Báðar þarf að geta sannað." },
+  { c: "1.3", p: 27, q: "Regla 1.5", f: "x² = 2 hefur enga ræða lausn", a: "Jafnan x² = 2 hefur enga ræða lausn, þ.e. √2 er óræð. Sönnuð með mótsögn og HR1.2." },
+  { c: "1.4", p: 31, q: "Regla 1.6", f: "a + b = c ⇔ a = c − b<br>ab = c ⇔ a = c/b ef b ≠ 0", a: "Reglan sem notuð er til að leysa einfaldar jöfnur. Sönnunin er merkt „þri“." },
+  { c: "1.4", p: "~33", q: "Regla 1.7: Núllreglan", f: "ab = 0 ⇔ (a = 0 ∨ b = 0)", a: "Gildir um allar rauntölur a og b. Notuð til að kljúfa n-ta stigs jöfnur sem hafa verið þáttaðar í fyrsta stigs jöfnur." },
+  { c: "1.4", p: 36, q: "Regla 1.8", a: "Fyrir sérhvert a ∈ ℝ₊ og sérhvert n ∈ ℤ₊ hefur jafnan xⁿ = a eina jákvæða lausn og aðeins eina. (Ekki sönnuð fyrr en í 5. bekk.)" },
+  { c: "1.4", p: 36, q: "Skilgreining 1.7: n-ta rót", f: "t = ⁿ√a ⇔ t ≥ 0 og tⁿ = a", a: "Gerum ráð fyrir að a ≥ 0 og n ∈ ℤ₊. Sú tala t ≥ 0 sem uppfyllir tⁿ = a kallast n-ta rótin af a, táknuð ⁿ√a. a heitir rótarstofn og n rótarvísir." },
+  { c: "1.4", p: 37, q: "Reglur um rætur", f: "(ⁿ√a)ⁿ = a ∧ ⁿ√(aⁿ) = a &nbsp;(a ∈ ℝ₊, n ∈ ℤ₊)<br>ⁿ√1 = 1, &nbsp; ⁿ√0 = 0", a: "Leiðir beint af Skilgreiningu 1.7. Í stað ²√a er ritað √a, kvaðratrót eða ferningsrót." },
+  { c: "1.4", p: 37, q: "Lausn á x² = a", f: "x² = a ⇔ x = ±√a &nbsp;ef a ∈ ℝ₊", a: "Fæst með núllreglunni og samokareglunni: x² − (√a)² = (x − √a)(x + √a) = 0. Ef a er neikvæð er engin lausn því x² ≥ 0." },
+  { c: "1.4", p: 37, q: "HR1.3: Að fylla ferninginn", f: "x² + bx + (b/2)² = (x + b/2)²", a: "Gildir um allar rauntölur x og b. Hálfur stuðullinn við x er hafinn í 2. veldi og lagður við. Sönnunin er merkt „þri“." },
+  { c: "1.4", p: 39, q: "Skilgreining 1.8: Annars stigs jafna", f: "Ax² + Bx + C = 0, A ≠ 0, &nbsp; D = B² − 4AC", a: "Annars stigs jafna er jafna sem rita má á forminu Ax² + Bx + C = 0 þar sem A, B og C eru gefnar rauntölur og A ≠ 0. A, B og C kallast stuðlar jöfnunnar og D = B² − 4AC greinir hennar." },
+  { c: "1.4", p: 39, q: "Regla 1.9: Lausn 2. stigs jöfnu", f: "D > 0: x = (−B ± √D)/(2A)<br>D = 0: x = −B/(2A)<br>D < 0: engin rauntölulausn", a: "Ef A ≠ 0 hefur Ax² + Bx + C = 0 tvær lausnir ef D > 0, eina ef D = 0 og enga rauntölulausn ef D < 0. Sönnunin er merkt „þri“." },
+  { c: "1.4", p: 40, q: "Rætur í svari", a: "Venja er að hafa heila tölu undir kvaðratrót og hana sem minnsta, t.d. √48 = √(16·3) = 4√3." },
+  { c: "1.4", p: "~41", q: "xⁿ = b þegar n er oddatala", f: "xⁿ = b ⇔ x = ⁿ√b<br>xⁿ = −b ⇔ x = −ⁿ√b", a: "Ef n er jákvæð oddatala og b ∈ ℝ₊. Þá má skilgreina ⁿ√(−b) = −ⁿ√b, t.d. ³√(−64) = −4." },
+  { c: "1.4", p: "~41", q: "xⁿ = b þegar n er slétt tala", f: "xⁿ = b ⇔ x = ⁿ√b ∨ x = −ⁿ√b<br>xⁿ = −b hefur enga lausn", a: "Ef n er jákvæð slétt tala og b ∈ ℝ₊. ⁿ√(−b) er því ekki skilgreint, t.d. hefur ⁴√(−64) enga merkingu." },
+  { c: "1.5", p: 46, q: "Regla 1.10 um einfaldar ójöfnur", f: "1) a > b ⇔ a + c > b + c<br>2) a > b ⇔ ac > bc ef c > 0<br>3) a > b ⇔ ac < bc ef c < 0", a: "Gildir um öll a, b, c ∈ ℝ. Ójöfnumerki snýst við ef báðar hliðar eru margfaldaðar með neikvæðri tölu. Sönnunin er merkt „Próf á þri“." },
+  { c: "1.5", p: "~48", q: "Formerki margfelda og kvóta", f: "sama formerki ⇔ ab og a/b jákvæðar<br>gagnstæð formerki ⇔ ab og a/b neikvæðar", a: "Gildir um rauntölur a og b. Margfeldi jákvæðra talna er alltaf jákvætt." },
+  { c: "1.5", p: 49, q: "Margfeldi n neikvæðra talna", a: "Margfeldi n neikvæðra talna er jákvætt ef n er slétt tala og neikvætt ef n er oddatala. Ef einn þáttur margfeldis skiptir um formerki en aðrir halda sínu skiptir margfeldið um formerki." },
+  { c: "1.5", p: 49, q: "Formerki x − a", f: "(x − a) jákvæð ⇔ x > a<br>(x − a) neikvæð ⇔ x < a", a: "Grunnurinn að formerkjatöflum: þáttur (x − a) skiptir um formerki í x = a." },
+  { c: "1.6", p: 53, q: "Skilgreining 1.9: Tölugildi", f: "|t| = t ef t ≥ 0, &nbsp; |t| = −t ef t < 0", a: "Tölugildi rauntölunnar t er táknað |t|. Tölugildi er aldrei neikvætt, t.d. |4| = 4 og |−4| = −(−4) = 4." },
+  { c: "1.6", p: 53, q: "Regla 1.11 um tölugildi", f: "1) |t|² = t² &nbsp; 2) √(t²) = |t| &nbsp; 3) |st| = |s||t|<br>4) |at| = a|t| ef a ≥ 0 &nbsp; 5) |−t| = |t|", a: "Gildir um öll s, t ∈ ℝ." },
+  { c: "1.6", p: 57, q: "Regla 1.12: Að hefja í veldi", f: "1) a = b ⇔ a² = b² &nbsp; 2) a > b ⇔ a² > b²", a: "Gildir ef a ≥ 0 og b ≥ 0. Má því hefja jöfnu eða ójöfnu í annað veldi ef hvorug hlið er neikvæð, t.d. þegar tölugildi er báðum megin." }
+];
+const greinar = { "1.1": "1.1 · Mengi og yrðingar", "1.2": "1.2 · Rauntölur og reikniaðgerðir", "1.3": "1.3 · Röðun rauntalna og talnalínan", "1.4": "1.4 · Jöfnur", "1.5": "1.5 · Ójöfnur", "1.6": "1.6 · Tölugildi" };
+const rl = document.getElementById("rulesList");
+Object.keys(greinar).forEach(c => {
+  const div = document.createElement("div");
+  div.className = "kafli";
+  div.innerHTML = `<h3>${greinar[c]}</h3>` + rules.filter(r => r.c === c).map(r =>
+    `<div class="rule"><span class="page">bls. ${r.p}</span><div class="rt">${r.q}</div>${r.f ? `<div class="rf">${r.f}</div>` : ""}<div class="rb">${r.a}</div></div>`).join("");
+  rl.appendChild(div);
+});
+
+/* ---------- Proof hide toggles ---------- */
+document.querySelectorAll("[data-toggle]").forEach(btn => btn.addEventListener("click", () => {
+  const p = btn.closest(".hideable");
+  p.classList.toggle("hidden");
+  btn.textContent = p.classList.contains("hidden") ? "Sýna skrefin" : "Fela skrefin";
+}));
+
+/* ---------- Flashcards ---------- */
+const knownKey = "alg-known";
+let known = store.get(knownKey, {});
+let deck = [], pos = 0, flipped = false;
+const card = document.getElementById("fcCard");
+const filterVal = () => document.getElementById("fcFilter").value;
+function buildDeck(shuffle) {
+  const f = filterVal();
+  deck = rules.map((r, i) => i).filter(i => (f === "all" || rules[i].c === f) && !known[i]);
+  if (shuffle) for (let i = deck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [deck[i], deck[j]] = [deck[j], deck[i]]; }
+  pos = 0; flipped = false; renderCard();
+}
+function renderCard() {
+  const f = filterVal();
+  const total = rules.filter(r => f === "all" || r.c === f).length;
+  const left = deck.length;
+  document.getElementById("fcCount").textContent = `${total - left} af ${total} kunn`;
+  const btns = [document.getElementById("fcKnow"), document.getElementById("fcAgain")];
+  if (!left) {
+    card.innerHTML = `<span class="side">Búið</span><span class="q">Öll spjöldin í þessum bunka eru komin í „Kann þetta“.</span><span class="a">Veldu „Byrja upp á nýtt“ til að fara aftur yfir þau.</span>`;
+    btns.forEach(b => b.disabled = true);
+    return;
+  }
+  btns.forEach(b => b.disabled = false);
+  const r = rules[deck[pos % left]];
+  card.innerHTML = flipped
+    ? `<span class="side">Svar · grein ${r.c}, bls. ${r.p}</span><span class="a">${r.a}${r.f ? `<span class="rf">${r.f}</span>` : ""}</span>`
+    : `<span class="side">Spurning · grein ${r.c} · smelltu til að snúa</span><span class="q">${r.q}</span>`;
+}
+card.addEventListener("click", () => { if (!deck.length) return; flipped = !flipped; renderCard(); });
+document.getElementById("fcKnow").addEventListener("click", () => {
+  if (!deck.length) return;
+  known[deck[pos % deck.length]] = true; store.set(knownKey, known);
+  deck.splice(pos % deck.length, 1); flipped = false; renderCard();
+});
+document.getElementById("fcAgain").addEventListener("click", () => {
+  if (!deck.length) return;
+  pos = (pos + 1) % deck.length; flipped = false; renderCard();
+});
+document.getElementById("fcShuffle").addEventListener("click", () => buildDeck(true));
+document.getElementById("fcReset").addEventListener("click", () => {
+  const f = filterVal();
+  rules.forEach((r, i) => { if (f === "all" || r.c === f) delete known[i]; });
+  store.set(knownKey, known); buildDeck(true);
+});
+document.getElementById("fcFilter").addEventListener("change", () => buildDeck(true));
+buildDeck(true);
+
+/* ---------- Practice problems ---------- */
+const probs = [
+  { q: "A = {1, 2, 3, 4} og B = {3, 4, 5}. Finnið A ∩ B og A ∪ B.", h: "1.1 · Skilgreining 1.2", a: "A ∩ B = <b>{3, 4}</b> og A ∪ B = <b>{1, 2, 3, 4, 5}</b>." },
+  { q: "Ritið öll hlutmengi af {a, b}. Hve mörg eru þau?", h: "1.1 · hlutmengi", a: "<b>Ø, {a}, {b}, {a, b}</b>. Þau eru 2² = <b>4</b>." },
+  { q: "Ritið mengið {5, 10, 15, …, 100} á forminu {x ∈ M | p(x)}.", h: "1.1 · eins og Dæmi 1.3", a: "<b>{x ∈ ℤ₊ | x = 5n, n ∈ ℤ, 1 ≤ n ≤ 20}</b>." },
+  { q: "p: „3 > 5“ og q: „2 er slétt tala“. Finnið sanngildi ¬p, p ∧ q og p ∨ q.", h: "1.1 · yrðingar", a: "p er ósönn og q sönn. ¬p er <b>sönn</b>, p ∧ q er <b>ósönn</b> og p ∨ q er <b>sönn</b>." },
+  { q: "Þáttið 9x² − 12x + 4.", h: "1.2 · ferningsregla", a: "9x² − 12x + 4 = (3x)² − 2·3x·2 + 2² = <b>(3x − 2)²</b>." },
+  { q: "Styttið (x² − 9)/(x² + 3x).", h: "1.2 · samokaregla og stytting", a: "(x − 3)(x + 3) / (x(x + 3)) = <b>(x − 3)/x</b>, ef x ≠ 0 og x ≠ −3." },
+  { q: "Leysið x² − 5x + 6 = 0.", h: "1.4 · Regla 1.9", a: "D = 25 − 24 = 1 > 0, svo x = (5 ± 1)/2, þ.e. <b>x = 3 eða x = 2</b>." },
+  { q: "Leysið 2x² + 4x + 5 = 0.", h: "1.4 · Regla 1.9", a: "D = 16 − 40 = −24 < 0. Engin rauntölulausn: <b>L = Ø</b>." },
+  { q: "Leysið x² + 6x + 9 = 0.", h: "1.4 · Regla 1.9", a: "D = 36 − 36 = 0, svo ein lausn: <b>x = −6/2 = −3</b>." },
+  { q: "Leysið x(x − 4)(2x + 1) = 0.", h: "1.4 · núllreglan", a: "Skv. núllreglunni: <b>x = 0 ∨ x = 4 ∨ x = −1/2</b>." },
+  { q: "Fyllið ferninginn: x² + 8x + ___ .", h: "1.4 · HR1.3", a: "Hálfur stuðullinn er 4, svo bætum við 4² = 16: <b>x² + 8x + 16 = (x + 4)²</b>." },
+  { q: "Leysið x² − 6x − 1 = 0 með því að fylla ferninginn.", h: "1.4 · HR1.3", a: "x² − 6x = 1 ⇔ x² − 6x + 9 = 10 ⇔ (x − 3)² = 10 ⇔ <b>x = 3 ± √10</b>." },
+  { q: "Einfaldið √72 og reiknið ³√(−27).", h: "1.4 · rætur", a: "√72 = √(36·2) = <b>6√2</b>. ³√(−27) = <b>−3</b> því 3 er oddatala." },
+  { q: "Leysið ójöfnuna 3 − 2x > 7.", h: "1.5 · Regla 1.10", a: "−2x > 4 ⇔ <b>x < −2</b>. Ójöfnumerkið snýst við þegar deilt er með −2." },
+  { q: "Leysið (x − 1)(x + 3) < 0.", h: "1.5 · formerki margfelda", a: "Þættirnir skipta um formerki í x = 1 og x = −3. Margfeldið er neikvætt þegar þættirnir hafa gagnstæð formerki: <b>−3 < x < 1</b>." },
+  { q: "Leysið |x − 3| < 5.", h: "1.6 · tölugildi", a: "Fjarlægð x frá 3 er minni en 5: <b>−2 < x < 8</b>." }
+];
+document.getElementById("probs").innerHTML = probs.map(p =>
+  `<details class="prob"><summary><span>${p.q}</span><span class="hint">${p.h}</span></summary><div class="ans">${p.a}</div></details>`).join("");
+</script>
+</body>
+</html>

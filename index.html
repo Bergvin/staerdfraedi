@@ -7,154 +7,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-<style>
-/* Layout: one reading column like a ruled exercise book; sticky section bar; ink-blue with a red "teacher pen" accent */
-:root {
-  --paper: #f6f8fb;
-  --sheet: #ffffff;
-  --ink: #18233a;
-  --muted: #5a6680;
-  --rule: #d9e0ec;
-  --blue: #1f4fa8;
-  --blue-soft: #e6edfa;
-  --red: #c2362f;
-  --red-soft: #fbeaea;
-  --ok: #1d7a4c;
-  --ok-soft: #e3f4ea;
-  --display: "Literata", Georgia, "Times New Roman", serif;
-  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0f1522; --sheet: #161e2f; --ink: #e5eaf4; --muted: #9aa6bf; --rule: #2a3550;
-    --blue: #8fb2ff; --blue-soft: #1d2a48; --red: #ff8a80; --red-soft: #3a2024; --ok: #6fd3a0; --ok-soft: #173327;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #0f1522; --sheet: #161e2f; --ink: #e5eaf4; --muted: #9aa6bf; --rule: #2a3550;
-  --blue: #8fb2ff; --blue-soft: #1d2a48; --red: #ff8a80; --red-soft: #3a2024; --ok: #6fd3a0; --ok-soft: #173327;
-  color-scheme: dark;
-}
-* { box-sizing: border-box; }
-body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--sheet); }
-.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-header.top { padding-block: 40px 24px; }
-.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 6vw, 44px); line-height: 1.1; margin: 6px 0 12px; text-wrap: balance; }
-h2 { font-family: var(--display); font-weight: 600; font-size: 26px; margin: 0 0 6px; text-wrap: balance; }
-h3 { font-family: var(--display); font-weight: 600; font-size: 19px; margin: 0; }
-p { margin: 0; }
-.lede { color: var(--muted); max-width: 60ch; }
-.scope { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.chip { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-weight: 500; }
-.chip.red { background: var(--red-soft); color: var(--red); }
-
-nav.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--sheet); border-bottom: 1px solid var(--rule); }
-nav.bar .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; scrollbar-width: none; }
-nav.bar a { flex: none; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 14px; padding: 6px 12px; border-radius: 8px; }
-nav.bar a:hover, nav.bar a:focus-visible { color: var(--ink); background: var(--blue-soft); outline: none; }
-
-section { padding-block: 40px 8px; scroll-margin-top: 60px; }
-.sec-head { display: grid; gap: 6px; margin-bottom: 20px; }
-.sec-head p { color: var(--muted); max-width: 62ch; }
-
-/* Progress */
-.progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.meter { flex: 1; height: 8px; border-radius: 99px; background: var(--rule); overflow: hidden; }
-.meter i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
-
-/* Sessions */
-.sessions { display: grid; gap: 14px; }
-.session { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 14px; }
-.session.done { border-color: var(--ok); }
-.s-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.s-num { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--blue); min-width: 58px; }
-.s-meta { margin-left: auto; font-size: 13px; color: var(--muted); }
-.tasks { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
-.tasks label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; padding: 5px 4px; border-radius: 6px; }
-.tasks label:hover { background: var(--blue-soft); }
-.tasks input { margin-top: 4px; width: 17px; height: 17px; accent-color: var(--ok); flex: none; }
-.tasks input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--ok); }
-.tip { margin-top: 18px; padding: 14px 16px; border-left: 3px solid var(--red); background: var(--red-soft); border-radius: 0 8px 8px 0; font-size: 15px; }
-.tip strong { color: var(--red); }
-
-/* Rules reference */
-.kafli { margin-top: 22px; }
-.kafli > h3 { margin-bottom: 10px; color: var(--blue); }
-.rule { border: 1.5px solid var(--ink); background: var(--sheet); padding: 12px 14px; margin-bottom: 10px; }
-.rule .rt { font-weight: 600; }
-.rule .rb { margin-top: 4px; }
-.rule .rf { margin-top: 6px; font-family: var(--display); font-style: italic; font-size: 17px; color: var(--blue); }
-.page { float: right; font-size: 12px; color: var(--muted); margin-left: 8px; }
-.m { font-family: var(--display); font-style: italic; }
-
-/* Proofs */
-.proof { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; margin-bottom: 16px; display: grid; grid-template-columns: minmax(0,1fr) 220px; gap: 18px; align-items: start; }
-.proof .txt { min-width: 0; }
-.proof .stmt { margin: 6px 0 10px; font-style: italic; font-family: var(--display); }
-.proof ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
-.proof .eq { display: block; text-align: center; font-family: var(--display); font-style: italic; font-size: 17px; margin: 4px 0; color: var(--blue); }
-.proof svg { width: 100%; height: auto; max-width: 100%; }
-.proof .note { margin-top: 12px; font-size: 14px; color: var(--red); }
-.qed { float: right; color: var(--ink); font-style: normal; }
-.hideable.hidden ol { filter: blur(6px); user-select: none; }
-.btn { font: inherit; font-size: 14px; font-weight: 500; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); cursor: pointer; }
-.btn:hover { background: var(--blue-soft); }
-.btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-.btn.primary { background: var(--blue); color: var(--sheet); border-color: var(--blue); }
-.btn.good { background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
-.btn.bad { background: var(--red-soft); color: var(--red); border-color: var(--red); }
-.proof .btn { margin-top: 12px; }
-svg .ln { stroke: var(--ink); stroke-width: 1.6; fill: none; }
-svg .hl { stroke: var(--blue); stroke-width: 1.6; fill: none; }
-svg .dash { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
-svg text { fill: var(--ink); font-family: var(--display); font-style: italic; font-size: 15px; }
-svg text.b { fill: var(--blue); }
-
-/* Flashcards */
-.fc-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
-.fc-controls select { font: inherit; font-size: 14px; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); }
-.fc-count { margin-left: auto; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.card { width: 100%; min-height: 220px; border: 1.5px solid var(--ink); background: var(--sheet); border-radius: 4px; padding: 22px; cursor: pointer; display: grid; align-content: center; gap: 10px; text-align: left; font: inherit; color: var(--ink); background-image: repeating-linear-gradient(var(--sheet) 0 31px, var(--rule) 31px 32px); }
-.card:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.card .side { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
-.card .q { font-family: var(--display); font-size: 24px; font-weight: 600; text-wrap: balance; }
-.card .a { font-size: 17px; }
-.card .a .rf { display: block; margin-top: 8px; font-family: var(--display); font-style: italic; color: var(--blue); font-size: 19px; }
-.fc-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-.fc-actions .btn { flex: 1; min-width: 120px; }
-
-/* Practice */
-.probs { display: grid; gap: 10px; counter-reset: p; }
-.prob { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; }
-.prob summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: auto 1fr; gap: 10px; }
-.prob summary::-webkit-details-marker { display: none; }
-.prob summary::before { counter-increment: p; content: counter(p) "."; font-family: var(--display); font-weight: 700; color: var(--blue); }
-.prob .hint { grid-column: 2; font-size: 13px; color: var(--muted); }
-.prob .ans { margin: 10px 0 0 26px; padding-top: 10px; border-top: 1px dashed var(--rule); }
-.prob .ans b { color: var(--ok); }
-.tag { font-size: 12px; color: var(--muted); }
-
-/* Exam day */
-.check { columns: 2 260px; gap: 24px; padding-left: 20px; margin: 0; }
-.check li { margin-bottom: 8px; break-inside: avoid; }
-footer { padding-block: 40px 60px; color: var(--muted); font-size: 13px; }
-
-@media (max-width: 620px) {
-  .proof { grid-template-columns: 1fr; }
-  .proof svg { max-width: 260px; justify-self: center; }
-  .s-meta { margin-left: 0; width: 100%; }
-}
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-</style>
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
+    <nav class="subjects" aria-label="Námsgreinar">
+      <a href="./" aria-current="page">Flatarmyndir</a>
+      <a href="algebra.html">Algebra</a>
+    </nav>
     <div class="eyebrow">Stærðfræði · 1. bekkur MR</div>
     <h1>Flatarmyndir – prófundirbúningur</h1>
     <p class="lede">Námsplan í sjö lotum, allar skilgreiningar og reglur sem þarf að kunna, sannanirnar skref fyrir skref, spjöld til að þjálfa sig og æfingadæmi með svörum. Hakaðu við jafnóðum, framvindan vistast í þessum vafra.</p>
